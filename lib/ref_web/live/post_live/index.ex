@@ -6,11 +6,13 @@ defmodule RefWeb.PostLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :posts, list_posts())}
+    {:ok, assign(socket, :posts, list_posts()), temporary_assigns: [posts: []]}
   end
 
   @impl true
   def handle_params(params, _url, socket) do
+    if connected?(socket), do: Timeline.subscribe()
+
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
@@ -38,6 +40,15 @@ defmodule RefWeb.PostLive.Index do
     {:ok, _} = Timeline.delete_post(post)
 
     {:noreply, assign(socket, :posts, list_posts())}
+  end
+
+  @impl true
+  def handle_info({:post_created, post}, socket) do
+    {:noreply, update(socket, :posts, fn posts -> [post | posts] end)}
+  end
+
+  def handle_info({:post_updated, post}, socket) do
+    {:noreply, update(socket, :posts, fn posts -> [post | posts] end)}
   end
 
   defp list_posts do
