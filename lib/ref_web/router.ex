@@ -1,6 +1,6 @@
 defmodule RefWeb.Router do
   use RefWeb, :router
-
+  use Pow.Phoenix.Router
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -14,6 +14,12 @@ defmodule RefWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # use this pipline for routes that require user_auth to visit
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
   scope "/", RefWeb do
     pipe_through :browser
 
@@ -25,6 +31,12 @@ defmodule RefWeb.Router do
 
     live "/posts/:id", PostLive.Show, :show
     live "/posts/:id/show/edit", PostLive.Show, :edit
+  end
+
+  scope "/" do
+    pipe_through :browser
+
+    pow_routes()
   end
 
   # Other scopes may use custom stacks.
