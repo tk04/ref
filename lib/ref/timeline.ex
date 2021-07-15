@@ -4,7 +4,9 @@ defmodule Ref.Timeline do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
   alias Ref.Repo
+  alias Ref.Users.User
 
   alias Ref.Timeline.Post
 

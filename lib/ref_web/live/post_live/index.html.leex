@@ -1,7 +1,8 @@
 <h1>Timeline</h1>
-
+<p>current_user: <%=  @user_id %> </p>
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal RefWeb.PostLive.FormComponent,
+    user_id: @user_id || :new,
     id: @post.id || :new,
     title: @page_title,
     action: @live_action,

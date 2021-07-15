@@ -15,7 +15,8 @@ defmodule Ref.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Ref.PubSub},
       # Start the Endpoint (http/https)
-      RefWeb.Endpoint
+      RefWeb.Endpoint,
+      Pow.Store.Backend.MnesiaCache
       # Start a worker by calling: Ref.Worker.start_link(arg)
       # {Ref.Worker, arg}
     ]

@@ -42,6 +42,7 @@ defmodule RefWeb.Endpoint do
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
+
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
@@ -50,6 +51,8 @@ defmodule RefWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug Pow.Plug.Session, otp_app: :ref
+  plug Pow.Plug.Session,
+    otp_app: :ref,
+    cache_store_backend: Pow.Store.Backend.MnesiaCache
   plug RefWeb.Router
 end

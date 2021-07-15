@@ -3,12 +3,19 @@ defmodule RefWeb.PostLive.Index do
 
   alias Ref.Timeline
   alias Ref.Timeline.Post
+  alias Ref.Users
+  alias Pow.Plug.Session
+  alias RefWeb.SocketAuth
+  alias Plug.Conn
+  alias Pow.CredentialsCache
+
+
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params,%{"current_user_id" => user_id} =_session, socket) do
+    socket = assign(socket, user_id: user_id)
     {:ok, assign(socket, :posts, list_posts()), temporary_assigns: [posts: []]}
   end
-
   @impl true
   def handle_params(params, _url, socket) do
     if connected?(socket), do: Timeline.subscribe()

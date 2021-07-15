@@ -6,8 +6,12 @@ defmodule Ref.Repo.Migrations.CreatePosts do
       add :username, :string
       add :body, :string
       add :likes_count, :integer
+      add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
     end
+
+    create index(:posts, [:user_id])
+
   end
 end

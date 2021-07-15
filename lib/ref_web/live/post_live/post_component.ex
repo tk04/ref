@@ -9,7 +9,7 @@ defmodule RefWeb.PostLive.PostComponent do
           <div class="post-avatar"></div>
         </div>
         <div class="column column-90 post-body">
-          <b>@<%= @post.username %></b>
+          <b>@<%= @post.username %> | <%= @post.user_id %></b>
           <br/>
           <%= @post.body %>
         </div>
