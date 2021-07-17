@@ -78,10 +78,19 @@ defmodule Ref.Timeline do
   end
 
   def inc_likes(%Post{id: id}) do
-    {1, [post]} =
+    get_post = get_post!(id)
+    if get_post.likes_count == false do
+      {1, [post]} =
       from(p in Post, where: p.id == ^id, select: p)
-      |> Repo.update_all(inc: [likes_count: 1])
+      |> Repo.update_all(set: [likes_count: true])
     broadcast({:ok, post}, :post_updated)
+    else
+      {1, [post]} =
+      from(p in Post, where: p.id == ^id, select: p)
+      |> Repo.update_all(set: [likes_count: false])
+    broadcast({:ok, post}, :post_updated)
+    end
+
   end
   @doc """
   Deletes a post.

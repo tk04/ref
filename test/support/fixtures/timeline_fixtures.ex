@@ -12,7 +12,7 @@ defmodule Ref.TimelineFixtures do
       attrs
       |> Enum.into(%{
         body: "some body",
-        likes_count: 42,
+        likes_count: false,
         username: "some username"
       })
       |> Ref.Timeline.create_post()

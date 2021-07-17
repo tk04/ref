@@ -1,5 +1,9 @@
 defmodule RefWeb.PostLive.PostComponent do
   use RefWeb, :live_component
+  import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
+  alias Ref.Repo
+
   def render(assigns) do
     ~L"""
 

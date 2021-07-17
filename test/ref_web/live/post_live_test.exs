@@ -4,8 +4,8 @@ defmodule RefWeb.PostLiveTest do
   import Phoenix.LiveViewTest
   import Ref.TimelineFixtures
 
-  @create_attrs %{body: "some body", likes_count: 42, username: "some username"}
-  @update_attrs %{body: "some updated body", likes_count: 43, username: "some updated username"}
+  @create_attrs %{body: "some body", likes_count: false, username: "some username"}
+  @update_attrs %{body: "some updated body", likes_count: true, username: "some updated username"}
   @invalid_attrs %{body: nil, likes_count: nil, username: nil}
 
   defp create_post(_) do

@@ -5,7 +5,7 @@ defmodule Ref.Repo.Migrations.CreatePosts do
     create table(:posts) do
       add :username, :string
       add :body, :string
-      add :likes_count, :integer
+      add :likes_count, :boolean
       add :user_id, references(:users, on_delete: :nothing)
 
       timestamps()
