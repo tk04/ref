@@ -3,6 +3,7 @@ defmodule RefWeb.PostLive.PostComponent do
   import Ecto.Query, warn: false
   import Ecto.Query, only: [from: 2]
   alias Ref.Repo
+  alias Ref.Users
 
   def render(assigns) do
     ~L"""
@@ -13,7 +14,7 @@ defmodule RefWeb.PostLive.PostComponent do
           <div class="post-avatar"></div>
         </div>
         <div class="column column-90 post-body">
-          <b>@<%= @post.username %> | <%= @post.user_id %></b>
+          <b>@<%= @post.username %> | <%= email(@post.user_id) %></b>
           <br/>
           <%= @post.body %>
         </div>
@@ -42,6 +43,11 @@ defmodule RefWeb.PostLive.PostComponent do
   def handle_event("like", _, socket) do
     Ref.Timeline.inc_likes(socket.assigns.post)
     {:noreply, socket}
+  end
+
+  def email(id) do
+    user = Users.get_user!(id)
+    user.email
   end
 
 end

@@ -1,6 +1,8 @@
 defmodule RefWeb.Router do
   use RefWeb, :router
   use Pow.Phoenix.Router
+    use Pow.Extension.Phoenix.Router,
+    extensions: [PowExtensionOne, PowExtensionTwo]
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -32,12 +34,26 @@ defmodule RefWeb.Router do
     live "/posts/:id", PostLive.Show, :show
     live "/posts/:id/show/edit", PostLive.Show, :edit
   end
+  scope "/" do
+    pipe_through [:browser]
 
+    scope "/", RefWeb, as: "pow" do
+      delete "/session", SessionController, :delete
+      post "/session", SessionController, :create
+      post "/registration", RegistrationController, :create
+
+    end
+
+    pow_session_routes()
+    pow_extension_routes()
+  end
   scope "/" do
     pipe_through :browser
 
+
     pow_routes()
   end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", RefWeb do

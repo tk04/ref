@@ -33,5 +33,4 @@ import_config "#{config_env()}.exs"
 config :ref, :pow,
   user: Ref.Users.User,
   repo: Ref.Repo,
-  controller_callbacks: RefWeb.Pow.ControllerCallbacks,
   web_module: RefWeb

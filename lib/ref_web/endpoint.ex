@@ -10,6 +10,20 @@ defmodule RefWeb.Endpoint do
     signing_salt: "DoC3h1AD"
   ]
 
+  @pow_config [
+    repo: Ref.Repo,
+    user: Ref.Users.User,
+    current_user_assigns_key: :current_user,
+    session_key: "auth",
+    credentials_cache_store: {Pow.Store.CredentialsCache,
+                              ttl: :timer.minutes(30),
+                              namespace: "credentials"},
+    session_ttl_renewal: :timer.minutes(15),
+    cache_store_backend: Pow.Store.Backend.EtsCache,
+    otp_app: :ref
+
+  ]
+
   socket "/socket", RefWeb.UserSocket,
     websocket: true,
     longpoll: false
@@ -51,8 +65,6 @@ defmodule RefWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug Pow.Plug.Session,
-    otp_app: :ref,
-    cache_store_backend: Pow.Store.Backend.MnesiaCache
+  plug Pow.Plug.Session, @pow_config
   plug RefWeb.Router
 end
