@@ -34,6 +34,8 @@ defmodule RefWeb.PostLive.PostComponent do
             <b> delete </b>
 
           <% end %>
+          <span><%= live_patch "New comment", to: Routes.post_index_path(@socket, :new_comment, post_id: @post.id) %></span>
+
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ defmodule Ref.Timeline do
   alias Ref.Users.User
 
   alias Ref.Timeline.Post
+  alias Ref.Timeline.Comment
 
   @doc """
   Returns the list of posts.
@@ -56,6 +57,10 @@ defmodule Ref.Timeline do
     |> Post.changeset(attrs)
     |> Repo.insert()
     |> broadcast(:post_created)
+  end
+
+  def get_post_comments(id) do
+    Repo.all(from c in Comment, where: (c.post_id == ^id))
   end
 
   @doc """
@@ -130,5 +135,16 @@ defmodule Ref.Timeline do
     {:ok, post}
   end
 
+  #comment functions
+
+  def create_comment(attrs \\ %{}) do
+    %Comment{}
+    |> Comment.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def change_comment(%Comment{} = comment, attrs \\ %{}) do
+    Comment.changeset(comment, attrs)
+  end
 
 end

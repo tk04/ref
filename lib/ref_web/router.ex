@@ -33,6 +33,9 @@ defmodule RefWeb.Router do
 
     live "/posts/:id", PostLive.Show, :show
     live "/posts/:id/show/edit", PostLive.Show, :edit
+
+    live "/comments/new", PostLive.Index, :new_comment
+
   end
   scope "/" do
     pipe_through [:browser]

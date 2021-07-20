@@ -1,0 +1,11 @@
+<p>current_user: <%=  @user_id %> </p>
+<%= if @live_action in [:new] do %>
+  <%= live_modal RefWeb.CommentLive.FormComponent,
+    user_id: @user_id || :new,
+    id: @comment.id || :new,
+    post_id: @post_id,
+    title: @page_title,
+    action: @live_action,
+    comment: @comment,
+    return_to: Routes.post_index_path(@socket, :index) %>
+<% end %>

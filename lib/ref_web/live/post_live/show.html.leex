@@ -34,3 +34,11 @@
 
 <span><%= live_patch "Edit", to: Routes.post_show_path(@socket, :edit, @post), class: "button" %></span> |
 <span><%= live_redirect "Back", to: Routes.post_index_path(@socket, :index) %></span>
+
+
+<h1> comments: </h1>
+
+<%= for comment <- @comments do %>
+
+  <p> <%= comment.body %> </p> <br> <br>
+<%end %>

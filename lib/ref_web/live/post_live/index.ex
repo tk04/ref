@@ -8,7 +8,7 @@ defmodule RefWeb.PostLive.Index do
   alias RefWeb.SocketAuth
   alias Plug.Conn
   alias Pow.CredentialsCache
-
+  alias Ref.Timeline.Comment
 
 
   @impl true
@@ -39,6 +39,7 @@ defmodule RefWeb.PostLive.Index do
     socket
     |> assign(:page_title, "Listing Posts")
     |> assign(:post, nil)
+    |> assign(:comment, %Comment{})
   end
 
   @impl true
@@ -61,4 +62,17 @@ defmodule RefWeb.PostLive.Index do
   defp list_posts do
     Timeline.list_posts()
   end
+
+  #comment functions
+
+
+  defp apply_action(socket, :new_comment, %{"post_id" => post_id} =_params) do
+    socket
+    |> assign(:page_title, "New Comment")
+    |> assign(post_id: post_id)
+    |> assign(:comment, %Comment{})
+  end
+
+
+
 end

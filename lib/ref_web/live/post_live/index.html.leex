@@ -10,10 +10,23 @@
     return_to: Routes.post_index_path(@socket, :index) %>
 <% end %>
 
+<%= if @live_action in [:new_comment] do %>
+  <%= live_modal RefWeb.CommentLive.FormComponent,
+    user_id: @user_id || :new,
+    id: @comment.id || :new,
+    post_id: @post_id,
+    title: @page_title,
+    action: @live_action,
+    comment: @comment,
+    return_to: Routes.post_index_path(@socket, :index) %>
+<% end %>
+
+
 <div id="posts" phx-update="prepend">
   <%= for post <- @posts do %>
     <%= live_component @socket, RefWeb.PostLive.PostComponent, id: post.id, post: post %>
   <% end %>
+
 </div>
 
 <span><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new) %></span>
