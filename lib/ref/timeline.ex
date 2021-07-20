@@ -82,17 +82,19 @@ defmodule Ref.Timeline do
     |> broadcast(:post_updated)
   end
 
-  def inc_likes(%Post{id: id}) do
+  def inc_likes(%Post{id: id}, user_id) do
     get_post = get_post!(id)
-    if get_post.likes_count == false do
+    likes_list = String.split(get_post.likes_count, " ")
+    if user_id not in likes_list do
       {1, [post]} =
       from(p in Post, where: p.id == ^id, select: p)
-      |> Repo.update_all(set: [likes_count: true])
+      |> Repo.update_all(set: [likes_count: "#{get_post.likes_count}" <> " " <> "#{user_id}"])
     broadcast({:ok, post}, :post_updated)
-    else
+    end
+    if user_id in String.split(get_post.likes_count," ") do
       {1, [post]} =
       from(p in Post, where: p.id == ^id, select: p)
-      |> Repo.update_all(set: [likes_count: false])
+      |> Repo.update_all(set: [likes_count: List.delete(likes_list, user_id) |> Enum.join])
     broadcast({:ok, post}, :post_updated)
     end
 

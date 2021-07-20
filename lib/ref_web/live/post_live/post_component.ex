@@ -22,8 +22,8 @@ defmodule RefWeb.PostLive.PostComponent do
 
       <div class="row">
         <div class="column post-button-column">
-          <a href="#" phx-click="like" phx-target="<%= @myself %>">
-          <b>like</b> <%= @post.likes_count %>
+          <a href="#" phx-click="like" phx-value-user_id="<%= @user_id %>" phx-target="<%= @myself %>">
+          <b>like</b> <%= count(@post.likes_count) %>
         </div>
 
         <div class="column post-button-column">
@@ -42,8 +42,8 @@ defmodule RefWeb.PostLive.PostComponent do
     """
   end
 
-  def handle_event("like", _, socket) do
-    Ref.Timeline.inc_likes(socket.assigns.post)
+  def handle_event("like",  %{"user_id" => user_id}, socket) do
+    Ref.Timeline.inc_likes(socket.assigns.post, user_id)
     {:noreply, socket}
   end
 
@@ -51,5 +51,8 @@ defmodule RefWeb.PostLive.PostComponent do
     user = Users.get_user!(id)
     user.email
   end
-
+  def count(likes_count) do
+    list = String.split(likes_count, " ")
+    length(list) -1
+  end
 end
