@@ -53,6 +53,12 @@ defmodule RefWeb.PostLive.PostComponent do
   end
   def count(likes_count) do
     list = String.split(likes_count, " ")
-    length(list) -1
+    list = List.delete(list, "")
+    if list == [""] do
+      length(list) -1
+    else
+      list = List.delete(list, "")
+      length(list)
+    end
   end
 end

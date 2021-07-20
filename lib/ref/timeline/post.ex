@@ -4,7 +4,7 @@ defmodule Ref.Timeline.Post do
 
   schema "posts" do
     field :body, :string
-    field :likes_count, :string, default: ""
+    field :likes_count, :string, default: " "
     field :username, :string, default: "Turki"
     field :user_id, :id
 
