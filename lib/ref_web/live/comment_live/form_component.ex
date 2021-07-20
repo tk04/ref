@@ -34,8 +34,8 @@ defmodule RefWeb.CommentLive.FormComponent do
       {:ok, _comment} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Comment created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_patch(to: socket.assigns.return_to)}
+
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
