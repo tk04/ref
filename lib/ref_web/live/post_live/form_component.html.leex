@@ -10,6 +10,27 @@
   <%= textarea f, :body %>
   <%= error_tag f, :body %>
 
+  <%= for {_ref, msg} <- @uploads.photo.errors do  %>
+    <p class="alert alert-danger"><%= Phoenix.Naming.humanize(msg) %></p>
+
+  <%end %>
+  <%= live_file_input @uploads.photo %>
+
+  <%= for entry <- @uploads.photo.entries do%>
+    <div class="row">
+      <div class="column">
+        <%= live_img_preview entry, height: 80 %>
+      </div>
+      <div class="column">
+        <progress max="100" value="<%= entry.progress %>" />
+      </div>
+      <div class="column">
+        <a href="#" phx-click="cancel-entry" phx-value-ref="<%= entry.ref %>" phx-target="<%= @myself %>">
+        cancel </a>
+      </div>
+    </div>
+  <%end %>
+
   <div>
     <%= submit "Save", phx_disable_with: "Saving..." %>
   </div>

@@ -17,6 +17,11 @@ defmodule RefWeb.PostLive.PostComponent do
           <b>@<%= @post.username %> | <%= email(@post.user_id) %></b>
           <br/>
           <%= @post.body %>
+          <div class="column">
+            <%= for url <- @post.photo_urls do %>
+              <img src="<%= url %>" height="150" />
+            <%end%>
+          </div>
         </div>
       </div>
 

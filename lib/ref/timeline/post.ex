@@ -7,6 +7,7 @@ defmodule Ref.Timeline.Post do
     field :likes_count, :string, default: " "
     field :username, :string, default: "Turki"
     field :user_id, :id
+    field :photo_urls, {:array, :string}, default: []
 
     timestamps()
   end
