@@ -1,0 +1,12 @@
+<h1> hello </h1>
+
+<%= @user.email %>
+
+<%= for service <- @services do %>
+    <p> <%= service.name %></p>
+<%end%>
+<hr>
+
+<%= for post <- @posts do %>
+    <p> <%= post.body %></p>
+<%end%>

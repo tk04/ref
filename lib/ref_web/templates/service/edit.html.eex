@@ -1,0 +1,5 @@
+<h1>Edit Service</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.service_path(@conn, :update, @current_user.username, @service)) %>
+
+<span><%= link "Back", to: Routes.service_path(@conn, :index, @current_user.username) %></span>

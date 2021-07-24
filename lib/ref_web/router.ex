@@ -36,6 +36,12 @@ defmodule RefWeb.Router do
 
     live "/comments/new", PostLive.Index, :new_comment
 
+    resources "/:username/admin", ServiceController
+
+    get "/:username", UserController, :show
+
+
+
   end
   scope "/" do
     pipe_through [:browser]

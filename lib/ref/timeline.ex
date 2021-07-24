@@ -10,6 +10,7 @@ defmodule Ref.Timeline do
 
   alias Ref.Timeline.Post
   alias Ref.Timeline.Comment
+  alias Ref.Users
 
   @doc """
   Returns the list of posts.
@@ -22,6 +23,10 @@ defmodule Ref.Timeline do
   """
   def list_posts do
     Repo.all(from p in Post, order_by: [desc: p.id])
+  end
+  def list_user_posts!(username) do
+    id = Users.get_user_by_username!(username).id
+    Repo.all(from s in Post, where: s.user_id == ^id)
   end
 
   @doc """
