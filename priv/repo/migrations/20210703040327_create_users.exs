@@ -5,7 +5,8 @@ defmodule Ref.Repo.Migrations.CreateUsers do
     create table(:users) do
       add :email, :string, null: false
       add :username, :string
-
+      add :avatar, :string
+      add :uuid, :string
       add :password_hash, :string
 
       timestamps()

@@ -34,3 +34,8 @@ config :ref, :pow,
   user: Ref.Users.User,
   repo: Ref.Repo,
   web_module: RefWeb
+
+
+
+config :arc,
+  storage: Arc.Storage.Local
