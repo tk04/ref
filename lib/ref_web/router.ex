@@ -38,7 +38,20 @@ defmodule RefWeb.Router do
 
     resources "/:username/admin", ServiceController
 
+
+    live "/messages/:username", MessageLive.Index, :index
+    live "/messages/new", MessageLive.Index, :new
+    live "/messages/:id/edit", MessageLive.Index, :edit
+
+    live "/messages/:id", MessageLive.Show, :show
+    live "/messages/:id/show/edit", MessageLive.Show, :edit
+
     get "/:username", UserController, :show
+
+    resources "/:username/:id/requests", RequestController
+
+
+
 
 
 

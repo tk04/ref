@@ -58,4 +58,58 @@ defmodule Ref.AdminTest do
       assert %Ecto.Changeset{} = Admin.change_service(service)
     end
   end
+
+  describe "requests" do
+    alias Ref.Admin.Request
+
+    import Ref.AdminFixtures
+
+    @invalid_attrs %{description: nil}
+
+    test "list_requests/0 returns all requests" do
+      request = request_fixture()
+      assert Admin.list_requests() == [request]
+    end
+
+    test "get_request!/1 returns the request with given id" do
+      request = request_fixture()
+      assert Admin.get_request!(request.id) == request
+    end
+
+    test "create_request/1 with valid data creates a request" do
+      valid_attrs = %{description: "some description"}
+
+      assert {:ok, %Request{} = request} = Admin.create_request(valid_attrs)
+      assert request.description == "some description"
+    end
+
+    test "create_request/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Admin.create_request(@invalid_attrs)
+    end
+
+    test "update_request/2 with valid data updates the request" do
+      request = request_fixture()
+      update_attrs = %{description: "some updated description"}
+
+      assert {:ok, %Request{} = request} = Admin.update_request(request, update_attrs)
+      assert request.description == "some updated description"
+    end
+
+    test "update_request/2 with invalid data returns error changeset" do
+      request = request_fixture()
+      assert {:error, %Ecto.Changeset{}} = Admin.update_request(request, @invalid_attrs)
+      assert request == Admin.get_request!(request.id)
+    end
+
+    test "delete_request/1 deletes the request" do
+      request = request_fixture()
+      assert {:ok, %Request{}} = Admin.delete_request(request)
+      assert_raise Ecto.NoResultsError, fn -> Admin.get_request!(request.id) end
+    end
+
+    test "change_request/1 returns a request changeset" do
+      request = request_fixture()
+      assert %Ecto.Changeset{} = Admin.change_request(request)
+    end
+  end
 end

@@ -1,0 +1,41 @@
+<h1>Listing Messages</h1>
+
+
+  <thead>
+    <tr>
+      <th>Body || <%= @username %></th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="messages"><br>
+    <%= for message <- @messages do %>
+      <tr id="message-<%= message.id %>">
+        <td><%= message.body %> ||| <%= message.to_user_id == nil%></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.message_show_path(@socket, :show, message) %></span>
+          <span><%= live_patch "Edit", to: Routes.message_index_path(@socket, :edit, message) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: message.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+      <hr>
+    <% end %>
+  </tbody>
+</table>
+<%= f = form_for @changeset, "#",
+  id: "message-form",
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= hidden_input f, :to_user_id, value: @to_user_id %>
+
+  <%= hidden_input f, :user_id, value: @user_id %>
+
+  <%= label f, :body %>
+  <%= text_input f, :body %>
+  <%= error_tag f, :body %>
+
+  <div>
+    <%= submit "Save", phx_disable_with: "Saving..." %>
+  </div>

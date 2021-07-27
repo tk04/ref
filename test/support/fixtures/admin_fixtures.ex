@@ -18,4 +18,18 @@ defmodule Ref.AdminFixtures do
 
     service
   end
+
+  @doc """
+  Generate a request.
+  """
+  def request_fixture(attrs \\ %{}) do
+    {:ok, request} =
+      attrs
+      |> Enum.into(%{
+        description: "some description"
+      })
+      |> Ref.Admin.create_request()
+
+    request
+  end
 end

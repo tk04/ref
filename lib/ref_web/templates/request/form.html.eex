@@ -1,0 +1,20 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+
+  <%= hidden_input f, :user_id, value: @current_user.id %>
+  <%= hidden_input f, :to_user_id, value: get_user_id(@username) %>
+  <%= hidden_input f, :service_id, value: @id %>
+
+  <%= label f, :description %>
+  <%= textarea f, :description %>
+  <%= error_tag f, :description %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

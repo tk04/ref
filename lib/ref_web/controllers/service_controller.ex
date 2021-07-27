@@ -6,7 +6,8 @@ defmodule RefWeb.ServiceController do
 
   def index(conn, %{"username" => username} = _params) do
     services = Admin.list_user_services!(username)
-    render(conn, "index.html", services: services)
+    requests = Admin.list_requests(conn.assigns.current_user.id)
+    render(conn, "index.html", services: services, requests: requests)
   end
 
   def new(conn, _params) do

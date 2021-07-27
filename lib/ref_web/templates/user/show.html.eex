@@ -5,6 +5,7 @@
 
 <%= for service <- @services do %>
     <p> <%= service.name %></p>
+    <p><%= link "Request", to: Routes.request_path(@conn, :new, @user.username, service.id) %></p>
 <%end%>
 <hr>
 
