@@ -49,8 +49,10 @@ defmodule Ref.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:pow, "~>1.0.24"},
       {:arc, "~> 0.11.0"},
-      {:arc_ecto, "~> 0.11.1"}
-
+      {:arc_ecto, "~> 0.11.1"},
+      {:httpoison, "~> 1.7"},
+      {:poison, "~> 3.1"},
+      {:pow_assent, "~> 0.4.11"}
     ]
   end
 

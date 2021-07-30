@@ -2,6 +2,7 @@ defmodule Ref.Users.User do
   use Ecto.Schema
   use Pow.Ecto.Schema
   import Ecto.Changeset
+  use PowAssent.Ecto.Schema
   use Arc.Ecto.Schema
 
   schema "users" do

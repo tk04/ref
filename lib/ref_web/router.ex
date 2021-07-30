@@ -1,5 +1,6 @@
 defmodule RefWeb.Router do
   use RefWeb, :router
+  use PowAssent.Phoenix.Router
   use Pow.Phoenix.Router
     use Pow.Extension.Phoenix.Router,
     extensions: [PowExtensionOne, PowExtensionTwo]
@@ -16,10 +17,24 @@ defmodule RefWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :skip_csrf_protection do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :put_secure_browser_headers
+  end
+
   # use this pipline for routes that require user_auth to visit
   pipeline :protected do
     plug Pow.Plug.RequireAuthenticated,
       error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
+
+  scope "/" do
+    pipe_through :skip_csrf_protection
+
+    pow_assent_authorization_post_callback_routes()
   end
 
   scope "/", RefWeb do
@@ -72,7 +87,7 @@ defmodule RefWeb.Router do
   scope "/" do
     pipe_through :browser
 
-
+    pow_assent_routes()
     pow_routes()
   end
 

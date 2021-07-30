@@ -33,9 +33,22 @@ import_config "#{config_env()}.exs"
 config :ref, :pow,
   user: Ref.Users.User,
   repo: Ref.Repo,
-  web_module: RefWeb
+  web_module: RefWeb,
+  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
 
 
 
 config :arc,
   storage: Arc.Storage.Local
+
+
+config :ref, :pow_assent,
+  providers: [
+    paypal: [
+      client_id: "AddYIVeqgZKCKBLh3wP7J9xnOMdG5LN3edEUyxaeZNJXZkFsdge_0vGml-9NUo_fvywhQlWCmTeIHO1Z",
+      site: "https://www.sandbox.paypal.com/signin/authorize?scope=openid",
+      client_secret: "EOj7UFvqvNJ2Kx4BZBZi5HXC0GKijP2R1PeiXkSeqJTGl43mjANqkBlZ-QsdG2QOm_ph8yqdRK2O3Bv0",
+      strategy: Assent.Strategy.OAuth2
+
+    ]
+  ]
