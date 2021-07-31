@@ -45,10 +45,9 @@ config :arc,
 config :ref, :pow_assent,
   providers: [
     paypal: [
-      client_id: "AddYIVeqgZKCKBLh3wP7J9xnOMdG5LN3edEUyxaeZNJXZkFsdge_0vGml-9NUo_fvywhQlWCmTeIHO1Z",
-      site: "https://www.sandbox.paypal.com/signin/authorize?scope=openid",
-      client_secret: "EOj7UFvqvNJ2Kx4BZBZi5HXC0GKijP2R1PeiXkSeqJTGl43mjANqkBlZ-QsdG2QOm_ph8yqdRK2O3Bv0",
-      strategy: Assent.Strategy.OAuth2
+      client_id: "Ac2D1dfjJv8_g6StLHv-D5V0zlfdWWKy3PbPY-0Ep7mhTueY8nwRr8HGN-k_HGPOMoZGkgLrTYd2H0PS",
+      client_secret: "EFIDT5cg5TeXrlD85zM59hQ9y3VOtZQET2K2w5el7Mzi-e7NKZG4HFLit3Q9diV0ZML7Nl6dPbD3mtLn",
+      strategy: Ref.PaypalAuth
 
     ]
   ]

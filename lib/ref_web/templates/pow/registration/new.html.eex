@@ -48,3 +48,25 @@
 
   <%= for link <- PowAssent.Phoenix.ViewHelpers.provider_links(@conn),
   do: content_tag(:span, link) %>
+
+
+
+  <span id='lippButton'></span>
+<script src='https://www.paypalobjects.com/js/external/api.js'></script>
+<script>
+paypal.use( ['login'], function (login) {
+  login.render ({
+    "appid":"AddYIVeqgZKCKBLh3wP7J9xnOMdG5LN3edEUyxaeZNJXZkFsdge_0vGml-9NUo_fvywhQlWCmTeIHO1Z",
+    "authend":"sandbox",
+    "scopes":"openid profile address",
+    "containerid":"lippButton",
+    "responseType":"id_token",
+    "locale":"en-us",
+    "buttonType":"LWP",
+    "buttonShape":"pill",
+    "buttonSize":"lg",
+    "fullPage":"true",
+    "returnurl":"localhost:4001/auth/paypal/callback"
+  });
+});
+</script>
