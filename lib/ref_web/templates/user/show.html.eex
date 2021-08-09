@@ -2,13 +2,18 @@
 <img src="<%= Ref.Avatar.url({@user.avatar, @user}, :thumb) %>" style="width:80px; height:80px; border-radius: 50%;"/>
 
 <%= @user.email %>
+<%= @user.paypal_email%>
+<%= if @current_user == @user do %>
+    <%= link "edit user", to: Routes.pow_registration_path(@conn, :edit)%>
+<%end%>
 
 <%= for service <- @services do %>
     <p> <%= service.name %></p>
-    <p><%= link "Request", to: Routes.request_path(@conn, :new, @user.username, service.id) %></p>
+    <p><%= link "Request service", to: Routes.request_path(@conn, :new, @user.username, service.id) %></p>
 <%end%>
 <hr>
 
 <%= for post <- @posts do %>
     <p> <%= post.body %></p>
 <%end%>
+

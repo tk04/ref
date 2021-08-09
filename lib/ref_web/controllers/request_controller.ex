@@ -3,6 +3,7 @@ defmodule RefWeb.RequestController do
 
   alias Ref.Admin
   alias Ref.Admin.Request
+  alias Ref.Users
 
   def index(conn, %{"username" => username, "id" => id}= _params) do
     requests = Admin.list_requests()
@@ -19,7 +20,7 @@ defmodule RefWeb.RequestController do
       {:ok, request} ->
         conn
         |> put_flash(:info, "Request created successfully.")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.request_path(conn, :show, Users.get_user!(request.user_id).username, request.id))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)

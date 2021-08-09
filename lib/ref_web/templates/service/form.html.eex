@@ -15,6 +15,11 @@
   <%= text_input f, :description %>
   <%= error_tag f, :description %>
 
+
+  <%= label f, :price %>
+  $<%= number_input f, :price %>
+  <%= error_tag f, :price %>
+
   <div>
     <%= submit "Save" %>
   </div>

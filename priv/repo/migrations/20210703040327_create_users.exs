@@ -8,6 +8,8 @@ defmodule Ref.Repo.Migrations.CreateUsers do
       add :avatar, :string
       add :uuid, :string
       add :password_hash, :string
+      add :paypal_email, :string
+
 
       timestamps()
     end

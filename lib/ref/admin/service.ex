@@ -6,6 +6,7 @@ defmodule Ref.Admin.Service do
     field :description, :string
     field :name, :string
     field :user_id, :id
+    field :price, :integer
 
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule Ref.Admin.Service do
   @doc false
   def changeset(service, attrs) do
     service
-    |> cast(attrs, [:name, :description, :user_id])
+    |> cast(attrs, [:name, :description, :user_id, :price])
     |> validate_required([:name, :description])
   end
 end

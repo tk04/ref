@@ -1,11 +1,18 @@
 <h1>Edit profile</h1>
 
-<%= form_for @changeset, @action, [as: :user], fn f -> %>
+<%= form_for @changeset, @action, [as: :user, multipart: :true], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
+
+      <div>
+        <img id="output" style="width:100px; height:100px; object-fit: cover; border-radius:50%;"/>
+        <%= label f, :Profile_picture %>
+        <%= file_input f, :avatar, onchange: "loadFile(event)"%>
+        <%= error_tag f, :avatar %>
+    </div>
 
   <%= label f, :current_password %>
   <%= password_input f, :current_password %>
@@ -28,3 +35,15 @@
   </div>
 <% end %>
 
+<script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>
+
+
+  <a href="https://www.sandbox.paypal.com/connect/?client_id=Ac2D1dfjJv8_g6StLHv-D5V0zlfdWWKy3PbPY-0Ep7mhTueY8nwRr8HGN-k_HGPOMoZGkgLrTYd2H0PS&redirect_uri=localhost%3A4000%2Fauth%2Fpaypal%2Fcallback&response_type=code&scope=openid%20email%20https://uri.paypal.com/services/paypalattributes%2profile%20address"> Connect paypal account !!  </a>

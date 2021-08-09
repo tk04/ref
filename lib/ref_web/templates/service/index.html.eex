@@ -30,5 +30,5 @@
 <p> People's requests </p>
 
 <%= for rq <- @requests do %>
-  <p> <%= rq.description%>  || <%= rq.service_id%></p>
+  <p> <%= rq.description%>  || <%= rq.service_id%> || <%= link "view", to: Routes.request_path(@conn, :show, get_username(rq.user_id), rq.id) %></p>
 <%end%>

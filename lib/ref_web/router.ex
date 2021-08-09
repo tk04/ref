@@ -21,7 +21,7 @@ defmodule RefWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
-    plug :put_secure_browser_headers
+
   end
 
   # use this pipline for routes that require user_auth to visit
@@ -31,12 +31,6 @@ defmodule RefWeb.Router do
   end
 
 
-  scope "/" do
-    pipe_through :skip_csrf_protection
-
-
-    pow_assent_authorization_post_callback_routes()
-  end
 
   scope "/", RefWeb do
     pipe_through :browser
@@ -64,7 +58,9 @@ defmodule RefWeb.Router do
 
     get "/:username", UserController, :show
 
-    resources "/:username/:id/requests", RequestController
+    get "/:username/requests/:id", RequestController, :show
+    resources "/:username/:id/requests/", RequestController
+
 
 
 
@@ -79,6 +75,7 @@ defmodule RefWeb.Router do
       delete "/session", SessionController, :delete
       post "/session", SessionController, :create
       post "/registration", RegistrationController, :create
+      get "/auth/paypal/callback", PaypalController, :token
 
     end
 

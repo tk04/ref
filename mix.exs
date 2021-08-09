@@ -52,7 +52,8 @@ defmodule Ref.MixProject do
       {:arc_ecto, "~> 0.11.1"},
       {:httpoison, "~> 1.7"},
       {:poison, "~> 3.1"},
-      {:pow_assent, "~> 0.4.11"}
+      {:pow_assent, "~> 0.4.11"},
+
     ]
   end
 

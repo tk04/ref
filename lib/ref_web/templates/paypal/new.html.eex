@@ -1,0 +1,8 @@
+<h1> PAYAPL AUTH</h1>
+
+<%= @code%> || <br><%=  @decoded%>
+
+
+<h1> access token: <%= @access_token%> </h1>
+
+

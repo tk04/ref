@@ -9,6 +9,7 @@ defmodule Ref.Users.User do
     field :username, :string
     field :avatar, Ref.Avatar.Type
     field :uuid, :string
+    field :paypal_email, :string
 
     pow_user_fields()
     timestamps()
@@ -23,6 +24,11 @@ defmodule Ref.Users.User do
     |> pow_changeset(attrs)
 
   end
+  def changeset2(user, attrs) do
+    user
+    |> cast(attrs, [:paypal_email])
+  end
+
 
 
 end

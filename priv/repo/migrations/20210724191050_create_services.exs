@@ -6,6 +6,8 @@ defmodule Ref.Repo.Migrations.CreateServices do
       add :name, :string
       add :description, :string
       add :user_id, references(:users, on_delete: :nothing)
+      add :price, :integer
+
 
       timestamps()
     end

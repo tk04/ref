@@ -9,6 +9,21 @@ defmodule Ref.Users do
 
   def get_user!(id), do: Repo.get!(User, id)
 
+  def change_user(%User{} = user, attrs \\ %{}) do
+    User.changeset(user, attrs)
+  end
+
+  def update_user(%User{} = user, attrs) do
+    user
+    |> User.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_user_paypal(%User{} = user, attrs) do
+    user
+    |> User.changeset2(attrs)
+    |> Repo.update()
+  end
 
 
 end

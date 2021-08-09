@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+</head>
+
+<body>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=Ac2D1dfjJv8_g6StLHv-D5V0zlfdWWKy3PbPY-0Ep7mhTueY8nwRr8HGN-k_HGPOMoZGkgLrTYd2H0PS"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+  </script>
+</body>
+
 <h1>Register</h1>
 
 <%= form_for @changeset, @action, [multipart: true, as: :user], fn f -> %>
@@ -50,23 +63,37 @@
   do: content_tag(:span, link) %>
 
 
+<span id='lippButton'></span>
 
-  <span id='lippButton'></span>
-<script src='https://www.paypalobjects.com/js/external/api.js'></script>
-<script>
-paypal.use( ['login'], function (login) {
-  login.render ({
-    "appid":"AddYIVeqgZKCKBLh3wP7J9xnOMdG5LN3edEUyxaeZNJXZkFsdge_0vGml-9NUo_fvywhQlWCmTeIHO1Z",
-    "authend":"sandbox",
-    "scopes":"openid profile address",
-    "containerid":"lippButton",
-    "responseType":"id_token",
-    "locale":"en-us",
-    "buttonType":"LWP",
-    "buttonShape":"pill",
-    "buttonSize":"lg",
-    "fullPage":"true",
-    "returnurl":"localhost:4001/auth/paypal/callback"
-  });
-});
-</script>
+
+
+<body>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=Ac2D1dfjJv8_g6StLHv-D5V0zlfdWWKy3PbPY-0Ep7mhTueY8nwRr8HGN-k_HGPOMoZGkgLrTYd2H0PS"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+  </script>
+
+  <div id="paypal-button-container"></div>
+
+  <script>
+      paypal.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: '0.01'
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + details.payer.name.given_name);
+        location.replace("http://localhost:4000/")
+      });
+    }
+  }).render('#paypal-button-container');
+  </script>
+</body>

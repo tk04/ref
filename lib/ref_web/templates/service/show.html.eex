@@ -11,7 +11,10 @@
     <strong>Description:</strong>
     <%= @service.description %>
   </li>
-
+  <li>
+    <strong>Price:</strong>
+    <%= @service.price %>
+  </li>
 </ul>
 
 <span><%= link "Edit", to: Routes.service_path(@conn, :edit,@current_user.username, @service) %></span> |
