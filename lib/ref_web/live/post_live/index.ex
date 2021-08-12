@@ -11,12 +11,15 @@ defmodule RefWeb.PostLive.Index do
   alias Ref.Timeline.Comment
 
 
+
+
   @impl true
 
   def mount(_params,%{"current_user_id" => user_id} =_session, socket) do
     socket = assign(socket, user_id: user_id, text: "")
     {:ok, assign(socket, :posts, list_posts()), temporary_assigns: [posts: []]}
   end
+
   @impl true
   def handle_params(params, _url, socket) do
     if connected?(socket), do: Timeline.subscribe()
@@ -34,6 +37,7 @@ defmodule RefWeb.PostLive.Index do
     socket
     |> assign(:page_title, "New Post")
     |> assign(:post, %Post{})
+    |> assign(:text, "")
 
   end
 
@@ -46,7 +50,7 @@ defmodule RefWeb.PostLive.Index do
 
 
   #tag events
-
+  @impl true
   def handle_event("update_temp", %{"key" => "Enter", "value" => value, "text" => text}, socket) do
       if text == "" do
         tags = value
@@ -62,6 +66,8 @@ defmodule RefWeb.PostLive.Index do
   def handle_event("update_temp", _key, socket) do
     {:noreply, socket}
   end
+
+
 
 
   #end of tag events

@@ -4,7 +4,6 @@ defmodule RefWeb.PostLive.FormComponent do
   alias Ref.Timeline
   alias Ref.Timeline.Post
 
-
   @impl true
   def mount(socket) do
     {:ok, allow_upload(socket, :photo, accept: ~w(.png .jpeg .jpg), max_entries: 2)}
