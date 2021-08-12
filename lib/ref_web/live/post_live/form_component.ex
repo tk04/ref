@@ -19,6 +19,8 @@ defmodule RefWeb.PostLive.FormComponent do
      |> assign(:changeset, changeset)}
   end
 
+
+
   # COMMENT FUNCTIONS
   def update(%{comment: comment} = assigns, socket) do
     comment_changeset = Timeline.change_comment(comment)
@@ -130,6 +132,16 @@ defmodule RefWeb.PostLive.FormComponent do
       File.cp!(meta.path, dest)
     end)
     {:ok, post}
+  end
+
+
+  def view_tags(tags) do
+    if tags == "" do
+      []
+    else
+      Enum.with_index(String.split(String.replace(tags, ", ", "\n"), "\n"))
+
+    end
   end
 
 

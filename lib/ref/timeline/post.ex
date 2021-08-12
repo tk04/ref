@@ -8,6 +8,8 @@ defmodule Ref.Timeline.Post do
     field :username, :string, default: "Turki"
     field :user_id, :id
     field :photo_urls, {:array, :string}, default: []
+    field :tags, :string
+
 
     timestamps()
   end
@@ -15,7 +17,7 @@ defmodule Ref.Timeline.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:body, :user_id])
+    |> cast(attrs, [:body, :user_id, :tags])
     |> validate_required([:body, :user_id])
     |> validate_length(:body, min: 2, max: 250)
   end

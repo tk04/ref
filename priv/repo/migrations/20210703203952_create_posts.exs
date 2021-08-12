@@ -7,6 +7,7 @@ defmodule Ref.Repo.Migrations.CreatePosts do
       add :body, :string
       add :likes_count, :string
       add :user_id, references(:users, on_delete: :nothing)
+      add :tags, :string
 
       timestamps()
     end

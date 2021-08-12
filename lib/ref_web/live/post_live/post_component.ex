@@ -24,7 +24,7 @@ defmodule RefWeb.PostLive.PostComponent do
           </div>
         </div>
       </div>
-
+      <%= @post.tags %>
       <div class="row">
         <div class="column post-button-column">
           <a href="#" phx-click="like" phx-value-user_id="<%= @user_id %>" phx-target="<%= @myself %>">
@@ -66,4 +66,6 @@ defmodule RefWeb.PostLive.PostComponent do
       length(list)
     end
   end
+
+
 end

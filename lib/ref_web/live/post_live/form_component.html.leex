@@ -1,5 +1,4 @@
 <h2><%= @title %></h2>
-
 <%= f = form_for @changeset, "#",
   id: "post-form",
   phx_target: @myself,
@@ -9,7 +8,17 @@
   <%= hidden_input f, :user_id, value: @user_id %>
   <%= textarea f, :body %>
   <%= error_tag f, :body %>
+  <%= hidden_input f,:tags, value: @text %>
+    <textarea phx-window-keydown="update_temp" phx-value-text = "<%= @text %>"></textarea>
+    <pre>
+      <%= for {x,y} <- view_tags(@text) do  %>
+        <%= x %> | <%= y %> <button phx-capture-click="cancel-tag" phx-value-tag="<%=x%>" phx-value-index="<%=y%>" phx-value-text="<%=@text%>"> X </button>
+      <%end  %>
 
+
+
+    </pre>
+  <%= %>
   <%= for {_ref, msg} <- @uploads.photo.errors do  %>
     <p class="alert alert-danger"><%= Phoenix.Naming.humanize(msg) %></p>
 
