@@ -31,6 +31,28 @@ defmodule RefWeb.Router do
   end
 
 
+  scope "/" do
+    pipe_through [:browser]
+
+    scope "/", RefWeb, as: "pow" do
+      delete "/session", SessionController, :delete
+      post "/session", SessionController, :create
+      post "/registration", RegistrationController, :create
+      get "/auth/paypal/callback", PaypalController, :token
+
+    end
+
+    pow_session_routes()
+    pow_extension_routes()
+  end
+  scope "/" do
+    pipe_through :browser
+
+    pow_assent_routes()
+    pow_routes()
+  end
+
+
 
   scope "/", RefWeb do
     pipe_through :browser
@@ -57,6 +79,9 @@ defmodule RefWeb.Router do
     live "/messages/:id/show/edit", MessageLive.Show, :edit
 
     get "/:username", UserController, :show
+    post "/:username", UserController, :create_follow
+    delete "/:username", UserController, :delete_follow
+
 
     get "/:username/requests/:id", RequestController, :show
     resources "/:username/:id/requests/", RequestController
@@ -67,26 +92,6 @@ defmodule RefWeb.Router do
 
 
 
-  end
-  scope "/" do
-    pipe_through [:browser]
-
-    scope "/", RefWeb, as: "pow" do
-      delete "/session", SessionController, :delete
-      post "/session", SessionController, :create
-      post "/registration", RegistrationController, :create
-      get "/auth/paypal/callback", PaypalController, :token
-
-    end
-
-    pow_session_routes()
-    pow_extension_routes()
-  end
-  scope "/" do
-    pipe_through :browser
-
-    pow_assent_routes()
-    pow_routes()
   end
 
 

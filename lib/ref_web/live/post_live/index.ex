@@ -67,9 +67,6 @@ defmodule RefWeb.PostLive.Index do
     {:noreply, socket}
   end
 
-
-
-
   #end of tag events
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do

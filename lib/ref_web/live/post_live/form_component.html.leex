@@ -12,7 +12,7 @@
     <textarea phx-keydown="update_temp" phx-value-text = "<%= @text %>"></textarea>
     <pre>
       <%= for {x,y} <- view_tags(@text) do  %>
-        <%= x %> | <%= y %> <button phx-click="cancel-tag" phx-value-tag="<%=x%>" phx-value-index="<%=y%>" phx-value-text="<%=@text%>"> X </button>
+        <%= x %> | <%= y %> <h1 phx-click="cancel-tag" phx-value-tag="<%=x%>" phx-value-index="<%=y%>" phx-value-text="<%=@text%>"> X </h1>
       <%end  %>
 
 

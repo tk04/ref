@@ -11,6 +11,7 @@ defmodule Ref.Repo.Migrations.CreateUsers do
       add :paypal_email, :string
 
 
+
       timestamps()
     end
 

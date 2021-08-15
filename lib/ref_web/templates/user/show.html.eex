@@ -3,6 +3,27 @@
 
 <%= @user.email %>
 <%= @user.paypal_email%>
+<%= if already_follow(@current_user.id, @user.id) == false do%>
+    <%= form_for @changeset, Routes.user_path(@conn, :create_follow, @user), fn f -> %>
+    <%= if @changeset.action do %>
+        <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+        </div>
+    <% end %>
+        <%= hidden_input f, :follower_user_id, value: @current_user.id%>
+        <%= hidden_input f, :follow_user_id, value: @user.id%>
+
+
+    <div>
+        <%= submit "follow" %>
+    </div>
+    <% end %>
+<%else%>
+you follow him
+<%= link "unfollow", to: Routes.user_path(@conn, :delete_follow, @user.username), method: :delete%>
+
+<%end%>
+
 <%= if @current_user == @user do %>
     <%= link "edit user", to: Routes.pow_registration_path(@conn, :edit)%>
 <%end%>

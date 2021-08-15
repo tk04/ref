@@ -11,6 +11,7 @@ defmodule Ref.Users.User do
     field :uuid, :string
     field :paypal_email, :string
 
+
     pow_user_fields()
     timestamps()
   end
