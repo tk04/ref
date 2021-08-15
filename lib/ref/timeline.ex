@@ -12,6 +12,7 @@ defmodule Ref.Timeline do
   alias Ref.Timeline.Comment
   alias Ref.Users
 
+
   @doc """
   Returns the list of posts.
 
@@ -27,6 +28,12 @@ defmodule Ref.Timeline do
   def list_user_posts!(username) do
     id = Users.get_user_by_username!(username).id
     Repo.all(from s in Post, where: s.user_id == ^id)
+  end
+
+  def list_following_posts(user_id) do
+    following = Users.get_following(user_id)
+    list_following =  Enum.map(following, fn team_member -> team_member.follow_user_id end)
+    Repo.all(from p in Post, where: p.user_id in ^list_following)
   end
 
   @doc """

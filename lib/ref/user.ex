@@ -53,5 +53,8 @@ defmodule Ref.Users do
   def follower_get_by!(follow_id, follower_id) do
     Repo.one!(from f in Followers, where: f.follow_user_id == ^follow_id and f.follower_user_id == ^follower_id)
   end
+  def get_following(user_id) do
+    Repo.all(from f in Followers, where: f.follow_user_id == ^user_id)
+  end
   #end of follow functions
 end

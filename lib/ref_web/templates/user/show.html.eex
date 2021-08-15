@@ -38,3 +38,11 @@ you follow him
     <p> <%= post.body %></p>
 <%end%>
 
+<%= for f <- @following do %>
+    <p> <%= f.follower_user_id %></p>
+<%end%>
+<%= for i <- Enum.map(@following, fn team_member -> team_member.id end) do%>
+    <%= i%>
+<%end%>
+
+

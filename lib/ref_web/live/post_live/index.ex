@@ -17,7 +17,7 @@ defmodule RefWeb.PostLive.Index do
 
   def mount(_params,%{"current_user_id" => user_id} =_session, socket) do
     socket = assign(socket, user_id: user_id, text: "")
-    {:ok, assign(socket, :posts, list_posts()), temporary_assigns: [posts: []]}
+    {:ok, assign(socket, :posts, list_posts(user_id)), temporary_assigns: [posts: []]}
   end
 
   @impl true
@@ -69,11 +69,11 @@ defmodule RefWeb.PostLive.Index do
 
   #end of tag events
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
+  def handle_event("delete", %{"id" => id, "userid" => user_id}, socket) do
     post = Timeline.get_post!(id)
     {:ok, _} = Timeline.delete_post(post)
 
-    {:noreply, assign(socket, :posts, list_posts())}
+    {:noreply, assign(socket, :posts, list_posts(user_id))}
   end
 
   @impl true
@@ -85,8 +85,8 @@ defmodule RefWeb.PostLive.Index do
     {:noreply, update(socket, :posts, fn posts -> [post | posts] end)}
   end
 
-  defp list_posts do
-    Timeline.list_posts()
+  defp list_posts(user_id) do
+    Timeline.list_following_posts(user_id)
   end
 
   #comment functions

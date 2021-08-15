@@ -35,7 +35,7 @@ defmodule RefWeb.PostLive.PostComponent do
           <%= live_patch to: Routes.post_index_path(@socket, :edit, @post.id) do %>
             <b>edit</b>
           <% end %>
-          <%= link to: "#", phx_click: "delete", phx_value_id: @post.id do %>
+          <%= link to: "#", phx_click: "delete", phx_value_id: @post.id, phx_value_userid: @user_id do %>
             <b> delete </b>
 
           <% end %>

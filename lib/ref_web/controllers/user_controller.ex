@@ -10,7 +10,8 @@ defmodule RefWeb.UserController do
     services = Admin.list_user_services!(username)
     posts = Timeline.list_user_posts!(username)
     changeset = Users.change_follow(%Followers{})
-    render(conn, "show.html", user: user,  services: services, posts: posts, changeset: changeset)
+    following = Users.get_following(user.id)
+    render(conn, "show.html", user: user,  services: services, posts: posts, changeset: changeset, following: following)
   end
 
 
@@ -18,10 +19,11 @@ defmodule RefWeb.UserController do
 
 
   def create_follow(conn, %{"followers" => follow_params}) do
+    user_followed = Users.get_user!(follow_params["follow_user_id"]).username
     case Users.create_follow(follow_params) do
       {:ok, follow} ->
         conn
-        |> redirect(to: Routes.user_path(conn, :show, "tk"))
+        |> redirect(to: Routes.user_path(conn, :show, user_followed))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn,"new.html", changeset: changeset)
