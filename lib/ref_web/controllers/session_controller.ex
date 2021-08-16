@@ -5,7 +5,7 @@ defmodule RefWeb.SessionController do
   import Pow.Phoenix.Controller, only: [require_authenticated: 2]
   use RefWeb, :controller
   alias Plug.Conn
-
+  alias RefWeb.Pow.SessionView
   plug :require_authenticated when action in [:delete]
 
   @spec delete(Conn.t(), map()) :: Conn.t()
@@ -33,7 +33,7 @@ defmodule RefWeb.SessionController do
 
         conn
         |> put_flash(:info, "Invalid email or password")
-        |> render("new.html", changeset: changeset)
+        |> render(SessionView,"new.html", changeset: changeset)
     end
   end
 end
