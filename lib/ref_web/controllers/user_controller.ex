@@ -41,5 +41,26 @@ defmodule RefWeb.UserController do
   end
 
 
+  def commission_status(conn, %{"commission" => commission_params}) do
+    current_user = Pow.Plug.current_user(conn)
+    commission = Users.get_status(current_user.id)
+    if commission == nil do
+      case Users.create_commission(commission_params) do
+        {:ok, _commission} ->
+          conn
+          |> redirect(to: Routes.service_path(conn, :index, current_user.username))
+      end
+    else
+      commission = Users.get_commission!(current_user.id)
+      case Users.update_commission_status(commission, %{commission_status: commission_params["commission_status"]}) do
+        {:ok, _commission} ->
+          conn
+          |> redirect(to: Routes.service_path(conn, :index, current_user.username))
+      end
+
+
+    end
+  end
+
 
 end

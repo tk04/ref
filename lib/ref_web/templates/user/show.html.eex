@@ -27,10 +27,11 @@ you follow him
 <%= if @current_user == @user do %>
     <%= link "edit user", to: Routes.pow_registration_path(@conn, :edit)%>
 <%end%>
-
-<%= for service <- @services do %>
-    <p> <%= service.name %></p>
-    <p><%= link "Request service", to: Routes.request_path(@conn, :new, @user.username, service.id) %></p>
+<%= if get_commission_status(@user.id) != false do%>
+    <%= for service <- @services do %>
+        <p> <%= service.name %></p>
+        <p><%= link "Request service", to: Routes.request_path(@conn, :new, @user.username, service.id) %></p>
+    <%end%>
 <%end%>
 <hr>
 

@@ -3,12 +3,27 @@ defmodule RefWeb.ServiceController do
 
   alias Ref.Admin
   alias Ref.Admin.Service
+  alias Ref.Users
+  alias Ref.Users.Commission
 
   def index(conn, %{"username" => username} = _params) do
     services = Admin.list_user_services!(username)
+    com_changeset = Users.change_commission(%Commission{})
     requests = Admin.list_requests(conn.assigns.current_user.id)
-    render(conn, "index.html", services: services, requests: requests)
+    render(conn, "index.html", services: services, requests: requests, com_changeset: com_changeset)
   end
+
+
+  def create_commission(conn, %{"commission" => commission_params}) do
+    current_user = Pow.Plug.current_user(conn)
+    case Users.create_commission(commission_params) do
+      {:ok, _commission} ->
+        conn
+        |> redirect(to: Routes.service_path(conn, :index, current_user.username))
+    end
+
+  end
+
 
   def new(conn, _params) do
     changeset = Admin.change_service(%Service{})
@@ -60,4 +75,25 @@ defmodule RefWeb.ServiceController do
     |> put_flash(:info, "Service deleted successfully.")
     |> redirect(to: Routes.service_path(conn, :index, conn.assigns.current_user.username))
   end
+  def commission_status(conn, %{"commission" => commission_params}) do
+    current_user = Pow.Plug.current_user(conn)
+    commission = Users.get_status(current_user.id)
+    if commission == nil do
+      case Users.create_commission(commission_params) do
+        {:ok, _commission} ->
+          conn
+          |> redirect(to: Routes.service_path(conn, :index, current_user.username))
+      end
+    else
+      commission = Users.get_commission!(current_user.id)
+      case Users.update_commission_status(commission, %{commission_status: commission_params["commission_status"]}) do
+        {:ok, _commission} ->
+          conn
+          |> redirect(to: Routes.service_path(conn, :index, current_user.username))
+      end
+
+
+    end
+  end
+
 end

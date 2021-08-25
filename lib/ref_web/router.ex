@@ -57,7 +57,7 @@ defmodule RefWeb.Router do
   scope "/", RefWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    get "/", IndexController, :index
 
     live "/posts", PostLive.Index, :index
     live "/posts/new", PostLive.Index, :new
@@ -68,7 +68,9 @@ defmodule RefWeb.Router do
 
     live "/comments/new", PostLive.Index, :new_comment
 
+
     resources "/:username/admin", ServiceController
+    post "/:username/admin/status", UserController, :commission_status
 
 
     live "/messages/:username", MessageLive.Index, :index
@@ -83,7 +85,7 @@ defmodule RefWeb.Router do
     delete "/:username", UserController, :delete_follow
 
 
-    get "/:username/requests/:id", RequestController, :show
+    live "/:username/requests/:rid", MessageLive.Index, :index
     resources "/:username/:id/requests/", RequestController
 
 
@@ -91,6 +93,13 @@ defmodule RefWeb.Router do
 
 
 
+    get     "/:username/:id/requests", RequestController, :index
+    get     "/:username/:id/requests/:id/edit", RequestController, :edit
+    get     "/:username/:id/requests/new", RequestController, :new
+    post    "/:username/:id/requests" , RequestController, :create
+    patch   "/:username/:id/requests/:id" ,RequestController, :update
+    put     "/:username/:id/requests/:id" , RequestController, :update
+    delete  "/:username/:id/requests/:id", RequestController, :delete
 
   end
 

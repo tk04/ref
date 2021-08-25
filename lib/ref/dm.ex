@@ -22,9 +22,9 @@ defmodule Ref.DM do
     value
 
   end
-  def list_messages(user_id, to_user_id) do
+  def list_messages(request_id, user_id, to_user_id) do
 
-    Repo.all(from m in Message, where: ^user_id == m.user_id and ^to_user_id == m.to_user_id, or_where: ^user_id == m.to_user_id and ^to_user_id == m.user_id)
+    Repo.all(from m in Message, order_by: [asc: m.id], where: ^user_id == m.user_id and ^to_user_id == m.to_user_id and ^request_id == m.request_id, or_where: ^user_id == m.to_user_id and ^to_user_id == m.user_id and ^request_id == m.request_id)
   end
 
   @doc """

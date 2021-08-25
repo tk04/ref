@@ -1,3 +1,17 @@
+<h1>Show Request</h1>
+
+<ul>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @request.description %>
+  </li>
+
+</ul>
+
+
+
+
 <h1>Listing Messages</h1>
 
 
@@ -16,7 +30,7 @@
         <td>
           <span><%= live_redirect "Show", to: Routes.message_show_path(@socket, :show, message) %></span>
           <span><%= live_patch "Edit", to: Routes.message_index_path(@socket, :edit, message) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: message.id, data: [confirm: "Are you sure?"] %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_username: get_username(message.user_id) ,phx_value_id: message.id, data: [confirm: "Are you sure?"] %></span>
         </td>
       </tr>
       <hr>
@@ -31,6 +45,8 @@
   <%= hidden_input f, :to_user_id, value: @to_user_id %>
 
   <%= hidden_input f, :user_id, value: @user_id %>
+  <%= hidden_input f, :request_id, value: @request.id %>
+
 
   <%= label f, :body %>
   <%= text_input f, :body %>

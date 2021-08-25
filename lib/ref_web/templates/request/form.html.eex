@@ -15,6 +15,40 @@
   <%= textarea f, :description %>
   <%= error_tag f, :description %>
 
+<span id='lippButton'></span>
+
+
+
+<body>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=Ac2D1dfjJv8_g6StLHv-D5V0zlfdWWKy3PbPY-0Ep7mhTueY8nwRr8HGN-k_HGPOMoZGkgLrTYd2H0PS"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+  </script>
+
+  <div id="paypal-button-container"></div>
+
+  <script>
+      paypal.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: '<%= get_service(@id).price%>'
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + details.payer.name.given_name);
+        location.replace("http://localhost:4000/")
+      });
+    }
+  }).render('#paypal-button-container');
+  </script>
+</body>
   <div>
     <%= submit "Save" %>
   </div>

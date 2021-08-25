@@ -9,6 +9,62 @@
       <th></th>
     </tr>
   </thead>
+  <%= if user_status(@current_user.id) == nil do %>
+    <%= form_for @com_changeset, Routes.user_path(@conn, :commission_status, @current_user.username), fn f -> %>
+    <%= if @com_changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <%= hidden_input f, :commission_status, value: "true" %> <!--complete this later  -->
+    <%= hidden_input f, :user_id, value: @current_user.id %> <!--complete this later  -->
+
+
+    <div>
+      <%= submit "commission open" %>
+    </div>
+  <% end %>
+  <% else%>
+
+    <%= if get_commission(@current_user.id) == true do %>
+
+      <%= form_for @com_changeset, Routes.user_path(@conn, :commission_status, @current_user.username), fn f -> %>
+      <%= if @com_changeset.action do %>
+        <div class="alert alert-danger">
+          <p>Oops, something went wrong! Please check the errors below.</p>
+        </div>
+      <% end %>
+
+      <%= hidden_input f, :commission_status, value: "false" %> <!--complete this later  -->
+
+      <div>
+        <%= submit "commission closed" %>
+      </div>
+    <% end %>
+
+    <% else%>
+
+
+        <%= form_for @com_changeset, Routes.user_path(@conn, :commission_status, @current_user.username), fn f -> %>
+    <%= if @com_changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <%= hidden_input f, :commission_status, value: "true" %> <!--complete this later  -->
+
+
+    <div>
+      <%= submit "commission open" %>
+    </div>
+  <% end %>
+  <%end%>
+<%end %>
+
+
+  
   <tbody>
 <%= for service <- @services do %>
     <tr>

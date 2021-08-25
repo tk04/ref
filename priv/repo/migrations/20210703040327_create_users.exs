@@ -12,6 +12,7 @@ defmodule Ref.Repo.Migrations.CreateUsers do
 
 
 
+
       timestamps()
     end
 

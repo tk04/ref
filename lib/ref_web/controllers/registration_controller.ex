@@ -9,7 +9,6 @@ defmodule RefWeb.RegistrationController do
     #   %MyApp.Users.User{}
     #   |> MyApp.Users.User.changeset(user_params)
     #   |> MyApp.Repo.insert()
-
     conn
     |> Pow.Plug.create_user(user_params)
     |> case do

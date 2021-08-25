@@ -4,16 +4,19 @@ defmodule RefWeb.MessageLive.Index do
   alias Ref.DM
   alias Ref.DM.Message
   alias Ref.Users
+  alias Ref.Admin
 
   @impl true
-  def mount(%{"username" => username} =_params,%{"current_user_id" => user_id} = _session, socket) do
+  def mount(%{"username" => username, "rid" => rid} =_params,%{"current_user_id" => user_id} = _session, socket) do
     username = Users.get_user_by_username!(username).username
     to_user_id = Users.get_user_by_username!(username).id
+    request = Admin.get_request!(rid)
+
 
     changeset = DM.change_message(%Message{})
-    socket = assign(socket, user_id: user_id, changeset: changeset, username: username, to_user_id: to_user_id)
+    socket = assign(socket, user_id: user_id, changeset: changeset, username: username, to_user_id: to_user_id, request: request)
 
-    {:ok, assign(socket, :messages, list_messages(user_id, to_user_id))}
+    {:ok, assign(socket, :messages, list_messages(request.id, user_id, to_user_id))}
   end
 
   def handle_params(params, _url, socket) do
@@ -75,10 +78,14 @@ defmodule RefWeb.MessageLive.Index do
     {:ok, _} = DM.delete_message(message)
     to_user_id = Users.get_user_by_username!(username).id
 
-    {:noreply, assign(socket, :messages, list_messages(socket.assigns.user_id, to_user_id))}
+    {:noreply, assign(socket, :messages, list_messages(socket.assigns.request.id, socket.assigns.user_id, to_user_id))}
   end
 
-  defp list_messages(user_id,to_user_id) do
-    DM.list_messages(user_id, to_user_id)
+  defp list_messages(request_id, user_id,to_user_id) do
+    DM.list_messages(request_id, user_id, to_user_id)
+  end
+
+  def get_username(id) do
+    Users.get_user!(id).username
   end
 end

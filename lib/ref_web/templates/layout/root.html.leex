@@ -12,6 +12,7 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
+  <%= if "/" <> Enum.join(@conn.path_info, "/") != "/" do %>
     <header>
       <section class="container">
         <nav role="navigation">
@@ -34,6 +35,7 @@
             <b><%= (to_string(:inet_parse.ntoa(@conn.remote_ip))) %> </b>
 
     </header>
+  <%end %>
     <%= @inner_content %>
   </body>
 </html>
