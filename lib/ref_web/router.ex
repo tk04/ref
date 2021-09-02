@@ -58,6 +58,7 @@ defmodule RefWeb.Router do
     pipe_through :browser
 
     get "/", IndexController, :index
+    live "/page", PageLive, :index
 
     live "/posts", PostLive.Index, :index
     live "/posts/new", PostLive.Index, :new

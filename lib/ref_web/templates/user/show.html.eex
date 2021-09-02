@@ -1,49 +1,130 @@
-<h1> hello </h1>
-<img src="<%= Ref.Avatar.url({@user.avatar, @user}, :thumb) %>" style="width:80px; height:80px; border-radius: 50%;"/>
 
-<%= @user.email %>
-<%= @user.paypal_email%>
-<%= if already_follow(@current_user.id, @user.id) == false do%>
-    <%= form_for @changeset, Routes.user_path(@conn, :create_follow, @user), fn f -> %>
-    <%= if @changeset.action do %>
-        <div class="alert alert-danger">
-        <p>Oops, something went wrong! Please check the errors below.</p>
+
+<style>
+.main{
+    background:#F8F7F4;
+    margin-left:-200px;
+    margin-right:-200px;
+    padding:50px;
+    width:600px;
+
+    border-radius:20px;
+    float:left;
+}
+.follow{
+    float:right;
+}
+.service{
+    border: 1px solid black;
+    width:250px;
+    height:150px;
+    border-radius:10px;
+    padding:20px;
+    display:inline-block;
+    margin-right:20px;
+    margin-bottom:15px;
+
+
+}
+.all_service{
+    overflow: auto;
+    white-space: nowrap;
+    float:right;
+    width:450px;
+    margin-top:-50px;
+    margin-right:-200px;
+    height:250px;
+
+}
+
+.posts{
+    background:#F8F7F4;
+    margin-left:-200px;
+    margin-right:-200px;
+    padding:50px;
+    border-radius:20px;
+}
+.creds{
+    display:inline-block;
+}
+.text{
+    margin-top:-90px;
+    padding-left:160px;
+}
+.all{
+}
+
+</style>
+<div class="all">
+    <div class="main">
+        <div class="creds">
+            <img src="<%= Ref.Avatar.url({@user.avatar, @user}, :thumb) %>" style="width:120px; height:120px; border-radius: 50%;"/>
+            <div class="text">
+                <%= @user.username %><br>
+                <%= @user.email %><br>
+                <%= @user.paypal_email%>
+            </div>
         </div>
-    <% end %>
-        <%= hidden_input f, :follower_user_id, value: @current_user.id%>
-        <%= hidden_input f, :follow_user_id, value: @user.id%>
+    <%= if already_follow(@current_user.id, @user.id) == false do%>
+        <%= form_for @changeset, Routes.user_path(@conn, :create_follow, @user), fn f -> %>
+        <%= if @changeset.action do %>
+            <div class="alert alert-danger">
+            <p>Oops, something went wrong! Please check the errors below.</p>
+            </div>
+        <% end %>
+            <%= hidden_input f, :follower_user_id, value: @current_user.id%>
+            <%= hidden_input f, :follow_user_id, value: @user.id%>
 
 
-    <div>
-        <%= submit "follow" %>
-    </div>
-    <% end %>
-<%else%>
-you follow him
-<%= link "unfollow", to: Routes.user_path(@conn, :delete_follow, @user.username), method: :delete%>
+        <div>
+            <%= submit "follow", class: "follow"%>
+        </div>
+        <% end %>
+    <%else%>
+    you follow him
+    <%= link "unfollow", class: "follow", to: Routes.user_path(@conn, :delete_follow, @user.username), method: :delete%>
 
-<%end%>
-
-<%= if @current_user == @user do %>
-    <%= link "edit user", to: Routes.pow_registration_path(@conn, :edit)%>
-<%end%>
-<%= if get_commission_status(@user.id) != false do%>
-    <%= for service <- @services do %>
-        <p> <%= service.name %></p>
-        <p><%= link "Request service", to: Routes.request_path(@conn, :new, @user.username, service.id) %></p>
     <%end%>
+    <br><br>
+    <%= if @current_user == @user do %>
+        <%= link "edit user", to: Routes.pow_registration_path(@conn, :edit)%>
+    <%end%>
+    </div>
+
+    <%= if get_commission_status(@user.id) != false do%><br><br><br>
+    <div class="all_service">
+        <p> Servies Offered </p>
+        <%= for service <- @services do %>
+        <a href="<%=Routes.request_path(@conn, :new, @user.username, service.id)%>">
+            <div class="service"> 
+                <p> <%= service.name %> <br><%= service.price %></p>
+                
+            </div>
+        </a>
+        <%end%>
+    </div>
+</div>
 <%end%>
 <hr>
-
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<div class="posts">
 <%= for post <- @posts do %>
     <p> <%= post.body %></p>
-<%end%>
+        <p></p>
 
-<%= for f <- @following do %>
-    <p> <%= f.follower_user_id %></p>
 <%end%>
-<%= for i <- Enum.map(@following, fn team_member -> team_member.id end) do%>
-    <%= i%>
-<%end%>
+</div>
 
 
+<script>
+  $(document).ready(function() {
+      
+    // Find the stylesheet with id of 'one'
+    // and remove it from the document
+   // $('head').find('link#one').remove();
+  });
+</script>
