@@ -2,14 +2,10 @@
 
 <style>
 .main{
-    background:#F8F7F4;
-    margin-left:-200px;
-    margin-right:-200px;
-    padding:50px;
-    width:600px;
-
+    background:;
+    margin-right:100px;
+    padding:20px;
     border-radius:20px;
-    float:left;
 }
 .follow{
     float:right;
@@ -27,41 +23,74 @@
 
 }
 .all_service{
-    overflow: auto;
-    white-space: nowrap;
     float:right;
     width:450px;
-    margin-top:-50px;
-    margin-right:-200px;
+    margin-top:-300px;
+    margin-right:-400px;
     height:250px;
 
 }
 
 .posts{
     background:#F8F7F4;
-    margin-left:-200px;
-    margin-right:-200px;
-    padding:50px;
+    margin-right:100px;
+
+    padding:20px;
     border-radius:20px;
 }
 .creds{
-    display:inline-block;
 }
 .text{
     margin-top:-90px;
+    
     padding-left:160px;
 }
-.all{
+.username{
+    margin-bottom:0px;
+    padding-left:10px;
+    
+    
+    
 }
 
+.post{
+    background:#F8F7F4;
+    margin-right:100px;
+
+    margin-left:0px;
+    border-radius:20px;
+    height:150px;
+}
+.at{
+    opacity:50%;
+    padding-left:12px;
+
+}
+.right{
+    float:right;
+    margin-right:480px;
+    margin-top:40px;
+}
+.left{
+    float:left;
+
+}
+.dot {
+  height: 9px;
+  width: 9px;
+  background-color: #35C709;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right:3px;
+}
 </style>
 <div class="all">
     <div class="main">
         <div class="creds">
             <img src="<%= Ref.Avatar.url({@user.avatar, @user}, :thumb) %>" style="width:120px; height:120px; border-radius: 50%;"/>
             <div class="text">
-                <%= @user.username %><br>
-                <%= @user.email %><br>
+                TK<Br>
+                @<%= @user.username %><br>
                 <%= @user.paypal_email%>
             </div>
         </div>
@@ -81,8 +110,7 @@
         </div>
         <% end %>
     <%else%>
-    you follow him
-    <%= link "unfollow", class: "follow", to: Routes.user_path(@conn, :delete_follow, @user.username), method: :delete%>
+    <%= button "unfollow", class: "follow", to: Routes.user_path(@conn, :delete_follow, @user.username), method: :delete%>
 
     <%end%>
     <br><br>
@@ -105,19 +133,22 @@
     </div>
 </div>
 <%end%>
-<hr>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<div class="posts">
+
+
 <%= for post <- @posts do %>
-    <p> <%= post.body %></p>
-        <p></p>
+    <div class="post">
+        <div class="left">
+            <img src="<%= Ref.Avatar.url({@user.avatar, @user}, :thumb) %>" style="width:70px; height:70px; border-radius: 50%;"/>
+            
+            <p class="username"> <span class="dot"></span>Turki </p>
+            <p class="at"> @Turki</p>
+        </div>
+        <div class="right">
+            <p class="post_body" style= "display:inline-block;"> <%= post.body %></p>
+        </div>
+    </div>
 
 <%end%>
-</div>
 
 
 <script>

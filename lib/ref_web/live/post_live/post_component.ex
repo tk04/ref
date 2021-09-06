@@ -6,14 +6,32 @@ defmodule RefWeb.PostLive.PostComponent do
   alias Ref.Users
 
   def render(assigns) do
+
     ~L"""
+
+    <style>
+    .post{
+      background:#F8F7F4;
+      margin-right:100px;
+      margin-bottom:30px;
+      margin-left:0px;
+      border-radius:20px;
+    }
+    .post-avatar{
+      width:60px;
+    }
+    #post_bb{
+      margin-left:15px;
+    }
+    </style>
 
     <div id="post-<%= @post.id %>" class="post">
       <div class="row">
         <div class="column column-10">
-          <div class="post-avatar"></div>
+          <div class="post-avatar"><img src="<%= Ref.Avatar.url({get_user(@post.user_id).avatar, get_user(@post.user_id)}, :thumb) %>" style=" border-radius:50%;"/>
+          </div>
         </div>
-        <div class="column column-90 post-body">
+        <div class="column column-90 post-body" id="post_bb">
           <b>@<%= @post.username %> | <%= email(@post.user_id) %></b>
           <br/>
           <%= @post.body %>
@@ -67,5 +85,8 @@ defmodule RefWeb.PostLive.PostComponent do
     end
   end
 
+  def get_user(id) do
+    Users.get_user!(id)
+  end
 
 end

@@ -14,30 +14,53 @@
   <%= if "/" <> Enum.join(@conn.path_info, "/") != "/"  do %>
     <link id="one" phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+ <style>
+ul {
+  list-style-type: none;
+  margin: 10px;
+  padding: 0px;
+  overflow: hidden;
+  background-color: transparent;
+  font-family: 'Poppins', sans-serif;
+
+}
+.main{
+  border-bottom-right-radius:1%;
+  border-bottom-left-radius:1%;
+  margin:-1%;
+}
+li {
+  float: right;
+}
+
+li a {
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+    position: static;
+
+
+}
+    </style>
   </head>
   <body>
     <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-            <%= if Pow.Plug.current_user(@conn) do %>
-              <li> <%= @current_user.username %></li>
-              <li> <%= @current_user.paypal_email %></li>
-              <li> <%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete %>
-              <li> <%= link "Admin", to: Routes.service_path(@conn, :index, @current_user.username) %> </li>
-            <% else %>
-              <li> <%= link "Register", to: Routes.pow_registration_path(@conn, :new) %> </li>
-              <li> <%= link "Sign in", to: Routes.pow_session_path(@conn, :new) %></li>
-            <% end %>
-          </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
-            <b><%= (to_string(:inet_parse.ntoa(@conn.remote_ip))) %> </b>
+          <div class="main" style="clear: both;">
 
-    </header>
+            <ul>
+              <li><a href="#news">News</a></li>
+
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a class="active" href="#home">Home</a></li>
+
+            </ul>
+          </div>
+
+
+    </header><br>
   <%end %>
     <%= @inner_content %>
   </body>
