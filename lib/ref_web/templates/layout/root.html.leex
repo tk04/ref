@@ -6,12 +6,19 @@
     </script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bad+Script&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR&display=swap" rel="stylesheet">
+
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || "Ref", suffix: " · Phoenix Framework" %>
-  <%= if "/" <> Enum.join(@conn.path_info, "/") != "/"  do %>
+  <%= if "/" <> Enum.join(@conn.path_info, "/") != "/" do%>
     <link id="one" phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
  <style>
@@ -28,6 +35,8 @@ ul {
   border-bottom-right-radius:1%;
   border-bottom-left-radius:1%;
   margin:-1%;
+  padding:10px;
+  margin-right:100px;
 }
 li {
   float: right;
@@ -38,29 +47,32 @@ li a {
   color: black;
   text-align: center;
   padding: 14px 16px;
-  text-decoration: none;
+  font-family: 'Noto Serif KR', serif;
     position: static;
+    font-size:15px;
 
 
 }
     </style>
   </head>
   <body>
-    <header>
-          <div class="main" style="clear: both;">
+  <%= if "/" <> Enum.join(@conn.path_info, "/") != "/registration/new" and  "/" <> Enum.join(@conn.path_info, "/") != "/session/new" do%>
+            <div class="main" style="clear: both;">
 
-            <ul>
-              <li><a href="#news">News</a></li>
+              <ul>
+                <li style="float:left;   margin-left:150px; padding: 14px 16px; font-family: 'Bad Script', cursive;
+      font-size:21px;
+  ">Ref </li>
+                <li><a href="<%=Routes.service_path(@conn, :index, @current_user.username) %>">Admin Page</a></li>
+                <li><a href="<%=Routes.post_index_path(@conn, :index) %>">Time Line</a></li>
+                <li><a href="/<%= @current_user.username %>">My Profile</a></li>
+                <li><a class="active" href="/">Home</a></li>
 
-              <li><a href="#contact">Contact</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a class="active" href="#home">Home</a></li>
+              </ul>
+            </div>
+    <%end %>
 
-            </ul>
-          </div>
-
-
-    </header><br>
+  <br>
   <%end %>
     <%= @inner_content %>
   </body>

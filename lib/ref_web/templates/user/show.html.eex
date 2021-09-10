@@ -59,7 +59,8 @@
 
     margin-left:0px;
     border-radius:20px;
-    height:150px;
+    margin-bottom:25px;
+    height:120px;
 }
 .at{
     opacity:50%;
@@ -89,7 +90,6 @@
         <div class="creds">
             <img src="<%= Ref.Avatar.url({@user.avatar, @user}, :thumb) %>" style="width:120px; height:120px; border-radius: 50%;"/>
             <div class="text">
-                TK<Br>
                 @<%= @user.username %><br>
                 <%= @user.paypal_email%>
             </div>
@@ -136,18 +136,31 @@
 
 
 <%= for post <- @posts do %>
-    <div class="post">
-        <div class="left">
-            <img src="<%= Ref.Avatar.url({@user.avatar, @user}, :thumb) %>" style="width:70px; height:70px; border-radius: 50%;"/>
-            
-            <p class="username"> <span class="dot"></span>Turki </p>
-            <p class="at"> @Turki</p>
-        </div>
-        <div class="right">
-            <p class="post_body" style= "display:inline-block;"> <%= post.body %></p>
-        </div>
-    </div>
 
+    <div id="post-<%= post.id %>" class="post">
+      <div class="row">
+        <div class="column column-10">
+          <div class="post-avatar"><img src="<%= Ref.Avatar.url({@user.avatar, @user}, :thumb) %>" style=" border-radius:50%;"/>
+          </div>
+        </div>
+        <div class="column column-90 post-body" id="post_bb">
+          <b>@<%= post.username %> | <%= email(post.user_id) %></b>
+          <br/>
+          <%= post.body %>
+          <div class="column">
+            <%= for url <- post.photo_urls do %>
+              <img src="<%= url %>" height="150" />
+            <%end%>
+          </div>
+        </div>
+      </div>
+      <%= post.tags %>
+      <div class="row">
+        <div class="column post-button-column">
+          <span style="float:left; padding-left:20px;"><b>likes:</b> <%= count(post.likes_count) %></span>
+        </div>
+      </div>
+    </div>
 <%end%>
 
 

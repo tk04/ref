@@ -13,4 +13,25 @@ defmodule RefWeb.UserView do
       false
     end
   end
+
+
+  def email(id) do
+    user = Users.get_user!(id)
+    user.email
+  end
+  def count(likes_count) do
+    list = String.split(likes_count, " ")
+    list = List.delete(list, "")
+    if list == [""] do
+      length(list) -1
+    else
+      list = List.delete(list, "")
+      length(list)
+    end
+  end
+
+  def get_user(id) do
+    Users.get_user!(id)
+  end
+
 end
