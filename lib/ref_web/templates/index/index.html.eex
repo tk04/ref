@@ -89,9 +89,9 @@ p{
 <ul>
   <li><a href="#news">News</a></li>
 
-  <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
-  <li><a class="active" href="#home">Home</a></li>
+    <li><a href="/session/new">Login</a></li>
+  <li><a class="active" href="/">Home</a></li>
 
 </ul> 
   <br><Br>
@@ -108,18 +108,5 @@ p{
 
 
     <br><br><br><br><br>
-    <br><br><br><br><br><br>   
-    
-    
-     <br><br><br><br><br>
-    <br><br><br><br><br><br>    
-    
-    <br><br><br><br><br>
-    <br><br><br><br><br><br>   
-    
-        <img src="<%= Routes.static_path(@conn, "/images/ref1.jpg") %>" width="700px" style="float: left; padding-left:150px; padding-top:1px; margin-top:-360px;"/>
- <br><br><br><br><br>
-    <br><br><br><br><br><br>    <br><br><br><br><br>
-    <br><br><br><br><br><br>    <br><br><br><br><br>
-    <br><br><br><br><br><br>
-    
+<br><br>
+
