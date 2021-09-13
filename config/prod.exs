@@ -22,6 +22,7 @@ config :logger, level: :info
 
 config :ref, Ref.Repo,
   adapter: Ecto.Adapters.Postgres,
+  hostname: "ec2-34-228-154-153.compute-1.amazonaws.com",
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true,
   url: System.get_env("DATABASE_URL")
