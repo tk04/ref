@@ -10,12 +10,9 @@ defmodule RefWeb.PostLive.Index do
   alias Pow.CredentialsCache
   alias Ref.Timeline.Comment
 
-
-
-
   @impl true
 
-  def mount(_params,%{"current_user_id" => user_id} =_session, socket) do
+  def mount(_params, %{"current_user_id" => user_id} = _session, socket) do
     socket = assign(socket, user_id: user_id, text: "")
     {:ok, assign(socket, :posts, list_posts(user_id)), temporary_assigns: [posts: []]}
   end
@@ -38,7 +35,6 @@ defmodule RefWeb.PostLive.Index do
     |> assign(:page_title, "New Post")
     |> assign(:post, %Post{})
     |> assign(:text, "")
-
   end
 
   defp apply_action(socket, :index, _params) do
@@ -48,26 +44,25 @@ defmodule RefWeb.PostLive.Index do
     |> assign(:comment, %Comment{})
   end
 
-
-  #tag events
+  # tag events
   @impl true
   def handle_event("update_temp", %{"key" => "Enter", "value" => value, "text" => text}, socket) do
-      if text == "" do
-        tags = value
-        {:noreply, assign(socket, :text,  tags)}
-      else
-        tags = text <> ", " <> value
-        {:noreply, assign(socket, :text,  tags)}
-      end
-      #assing text value to socket and make it a list, then make the value of the list the :tags and save it to database
-  end
+    if text == "" do
+      tags = value
+      {:noreply, assign(socket, :text, tags)}
+    else
+      tags = text <> ", " <> value
+      {:noreply, assign(socket, :text, tags)}
+    end
 
+    # assing text value to socket and make it a list, then make the value of the list the :tags and save it to database
+  end
 
   def handle_event("update_temp", _key, socket) do
     {:noreply, socket}
   end
 
-  #end of tag events
+  # end of tag events
   @impl true
   def handle_event("delete", %{"id" => id, "userid" => user_id}, socket) do
     post = Timeline.get_post!(id)
@@ -89,20 +84,19 @@ defmodule RefWeb.PostLive.Index do
     Timeline.list_following_posts(user_id)
   end
 
-  #comment functions
+  # comment functions
 
-
-  defp apply_action(socket, :new_comment, %{"post_id" => post_id} =_params) do
+  defp apply_action(socket, :new_comment, %{"post_id" => post_id} = _params) do
     socket
     |> assign(:page_title, "New Comment")
     |> assign(post_id: post_id)
     |> assign(:comment, %Comment{})
   end
 
-  def handle_event("cancel-tag", %{"tag" => tag, "index" =>index, "text" => text}, socket) do
+  def handle_event("cancel-tag", %{"tag" => tag, "index" => index, "text" => text}, socket) do
     text = Enum.with_index(String.split(String.replace(text, ", ", "\n"), "\n"))
     new_text = List.delete(text, {tag, String.to_integer(index)})
-    text2 = Enum.map(new_text, fn {k,_v} -> k end)
+    text2 = Enum.map(new_text, fn {k, _v} -> k end)
     last = List.last(text2)
     new_list = List.delete(text2, last)
     text3 = Enum.map(new_list, fn k -> "#{k}, " end)
@@ -110,6 +104,4 @@ defmodule RefWeb.PostLive.Index do
 
     {:noreply, assign(socket, text: text4)}
   end
-
-
 end

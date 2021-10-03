@@ -16,7 +16,6 @@ config :ref, RefWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
 
-
 # Do not print debug messages in production
 config :logger, level: :info
 
@@ -25,7 +24,8 @@ config :ref, Ref.Repo,
   hostname: "ec2-34-228-154-153.compute-1.amazonaws.com",
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true,
-  url: "postgres://cqziabxdtgmtlu:3cc6783f4a80477d7fdee90039d7db5c35ca01f461c3e2632208714fc7a2690a@ec2-34-228-154-153.compute-1.amazonaws.com:5432/d5qhppmurra3lk"
+  url: System.get_env("DATABASE_URL")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
