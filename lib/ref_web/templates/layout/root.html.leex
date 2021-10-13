@@ -56,6 +56,7 @@ li a {
     </style>
   </head>
   <body>
+<x-comp></x-comp>
   <%= if "/" <> Enum.join(@conn.path_info, "/") != "/registration/new" and  "/" <> Enum.join(@conn.path_info, "/") != "/session/new" do%>
             <div class="main" style="clear: both;">
 

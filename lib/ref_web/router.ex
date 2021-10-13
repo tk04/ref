@@ -18,7 +18,7 @@ defmodule RefWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
 
-    get "/users", UserController, :get_users
+    # get "/users", UserController, :get_users
   end
 
   pipeline :skip_csrf_protection do
