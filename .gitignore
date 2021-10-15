@@ -35,5 +35,7 @@ npm-debug.log
 
 # Temporary files, for example, from tests.
 /tmp
+#api keys
+/lib/ref/keys.ex
 
 

@@ -36,7 +36,5 @@ config :ref, :pow,
   web_module: RefWeb,
   controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks
 
-
-
 config :arc,
   storage: Arc.Storage.Local
